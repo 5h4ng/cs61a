@@ -153,6 +153,13 @@ def remainders_generator(m):
     11
     """
     "*** YOUR CODE HERE ***"
+    def remainder(n):
+      if n != 0:
+          yield n
+      for i in naturals():
+          yield i * m + n
+    for i in range(m):
+        yield remainder(i)
 
 
 # Tree ADT
