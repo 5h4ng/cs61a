@@ -1,0 +1,7 @@
+'substitute-correct', (0, 66)
+'floor_div-correct', (512, 66)
+'using-pair-correct', (1024, 66)
+'eval_and-correct', (1536, 66)
+'eval_define-correct', (2048, 66)
+'unique-correct', (2560, 66)
+'tally-correct', (3072, 66)

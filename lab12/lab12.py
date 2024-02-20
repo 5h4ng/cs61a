@@ -14,21 +14,29 @@ def calc_eval(exp):
     >>> calc_eval(Pair("+", Pair(1, Pair(2, nil))))
     3
     """
+    #print(exp)
     if isinstance(exp, Pair):
-        operator = ____________  # UPDATE THIS FOR Q3
-        operands = ____________  # UPDATE THIS FOR Q3
+       #print(f'first: {exp.first}, rest: {exp.rest}')
+        operator = exp.first  # UPDATE THIS FOR Q3
+        if operator in bindings:
+            #print('bindings')
+            #print(bindings[operator])
+            operator = bindings[operator]
+        #print(f'operator: {operator}')
+        operands = exp.rest  # UPDATE THIS FOR Q3
+        
         if operator == 'and':  # and expressions
             return eval_and(operands)
         elif operator == 'define':  # define expressions
             return eval_define(operands)
         else:  # Call expressions
-            return calc_apply(___________, ___________)  # UPDATE THIS FOR Q3
+            return calc_apply(OPERATORS[operator], operands)  # UPDATE THIS FOR Q3?
     elif exp in OPERATORS:   # Looking up procedures
         return OPERATORS[exp]
     elif isinstance(exp, int) or isinstance(exp, bool):   # Numbers and booleans
         return exp
-    elif _________________:  # CHANGE THIS CONDITION FOR Q5
-        return _________________  # UPDATE THIS FOR Q5
+    elif exp in bindings:  # CHANGE THIS CONDITION FOR Q5
+        return calc_eval(bindings[exp]) # UPDATE THIS FOR Q5
 
 
 def calc_apply(op, args):
@@ -53,6 +61,10 @@ def floor_div(expr):
     3
     """
     # BEGIN SOLUTION Q3
+    if expr.rest is nil:
+        return expr.first
+    else:
+        return floor_div(Pair(expr.first // expr.rest.first, expr.rest.rest))
 
 
 def eval_and(operands):
@@ -73,6 +85,17 @@ def eval_and(operands):
     True
     """
     # BEGIN SOLUTION Q4
+    if operands is nil:
+        return True
+    else:
+        num = calc_eval(operands.first)
+        if num is False:
+            return False
+        elif operands.rest is nil:
+            return num
+        else:
+            return eval_and(operands.rest)    
+        
 
 
 bindings = {}
@@ -94,6 +117,9 @@ def eval_define(expr):
     2
     """
     # BEGIN SOLUTION Q5
+    if isinstance(expr, Pair):
+        bindings[expr.first] = expr.rest.first
+        return expr.first
 
 
 OPERATORS = {"//": floor_div, "+": addition, "-": subtraction, "*": multiplication, "/": division}
