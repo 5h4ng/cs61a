@@ -261,11 +261,14 @@ z
 (define (numer x) (car x))
 (define (denom x) (car (cdr x)))
 (define (print-rat x)
+
   (display (numer x))
   (display '/)
+
   (display (denom x))
   (newline))
 (define one-half (make-rat 1 2))
+
 (print-rat one-half)
 ; expect 1/2
 
